@@ -33,10 +33,45 @@
     $('hpBar').style.width=`${Math.max(0,Math.min(100,state.heroHp/maxHp()*100))}%`;$('manaBar').style.width=`${Math.max(0,Math.min(100,state.mana/maxMana()*100))}%`;
     $('attack').textContent=attackPower();$('defense').textContent=defensePower();
   }
+  
   function renderHeroes(){
-    $('heroGrid').innerHTML=heroes.map(h=>`<article class="hero-card"><div class="character-art">${h.emoji}</div><div class="hero-card-content"><h3>${h.name}</h3><p>${h.role}</p><div class="stats-chips"><span>❤️ ${h.hp}</span><span>✨ ${h.mana}</span><span>⚔ ${h.atk}</span><span>🛡 ${h.def}</span></div></div><button class="pick-btn" data-hero="${h.id}">${state.heroId===h.id?'ВЫБРАН':'ВЫБРАТЬ'}</button></article>`).join('');
-    $('heroGrid').querySelectorAll('[data-hero]').forEach(b=>b.onclick=()=>selectHero(b.dataset.hero));
+    const portraits = {
+      blade: 'juggernaut.jpg',
+      iron: 'pudge.jpg',
+      mage: 'crystal_maiden.jpg',
+      shade: 'phantom_assassin.jpg'
+    };
+
+    $('heroGrid').innerHTML = heroes.map(h => `
+      <article class="hero-card">
+        <div class="character-art">
+          <img
+            src="portraits/${portraits[h.id] || 'juggernaut.jpg'}"
+            alt="${h.name}"
+            onerror="this.style.display='none';this.parentElement.textContent='${h.emoji}'"
+          >
+        </div>
+        <div class="hero-card-content">
+          <h3>${h.name}</h3>
+          <p>${h.role}</p>
+          <div class="stats-chips">
+            <span>❤️ ${h.hp}</span>
+            <span>✨ ${h.mana}</span>
+            <span>⚔ ${h.atk}</span>
+            <span>🛡 ${h.def}</span>
+          </div>
+        </div>
+        <button class="pick-btn" data-hero="${h.id}">
+          ${state.heroId===h.id?'ВЫБРАН':'ВЫБРАТЬ'}
+        </button>
+      </article>
+    `).join('');
+
+    $('heroGrid').querySelectorAll('[data-hero]').forEach(
+      b => b.onclick = () => selectHero(b.dataset.hero)
+    );
   }
+
   function selectHero(id){
     const h=heroes.find(x=>x.id===id);state={...defaults,heroId:id,heroHp:h.hp,mana:h.mana};save();updateStatus();renderHeroes();showView('arena');toast(`${h.name} готов к бою!`);
   }
