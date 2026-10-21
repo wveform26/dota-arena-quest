@@ -34,43 +34,47 @@
     $('attack').textContent=attackPower();$('defense').textContent=defensePower();
   }
   
-  function renderHeroes(){
-    const portraits = {
-      blade: 'juggernaut.jpg',
-      iron: 'pudge.jpg',
-      mage: 'crystal_maiden.jpg',
-      shade: 'phantom_assassin.jpg'
-    };
+  
+    
+function renderHeroes(){
+  const portraits = {
+    blade: 'juggernaut.jpg',
+    iron: 'pudge.jpg',
+    mage: 'crystal_maiden.jpg',
+    shade: 'phantom_assassin.jpg'
+  };
 
-    $('heroGrid').innerHTML = heroes.map(h => `
-      <article class="hero-card">
-        <div class="character-art">
-          <img
-            src="portraits/${portraits[h.id] || 'juggernaut.jpg'}"
-            alt="${h.name}"
-            onerror="this.style.display='none';this.parentElement.textContent='${h.emoji}'"
-          >
+  $('heroGrid').innerHTML = heroes.map(h => `
+    <article class="hero-card">
+      <div class="character-art">
+        <img
+          src="portraits/${portraits[h.id]}"
+          alt="${h.name}"
+          onerror="this.style.display='none';this.parentElement.textContent='${h.emoji}'"
+        >
+      </div>
+      <div class="hero-card-content">
+        <h3>${h.name}</h3>
+        <p>${h.role}</p>
+        <div class="stats-chips">
+          <span>❤️ ${h.hp}</span>
+          <span>✨ ${h.mana}</span>
+          <span>⚔ ${h.atk}</span>
+          <span>🛡 ${h.def}</span>
         </div>
-        <div class="hero-card-content">
-          <h3>${h.name}</h3>
-          <p>${h.role}</p>
-          <div class="stats-chips">
-            <span>❤️ ${h.hp}</span>
-            <span>✨ ${h.mana}</span>
-            <span>⚔ ${h.atk}</span>
-            <span>🛡 ${h.def}</span>
-          </div>
-        </div>
-        <button class="pick-btn" data-hero="${h.id}">
-          ${state.heroId===h.id?'ВЫБРАН':'ВЫБРАТЬ'}
-        </button>
-      </article>
-    `).join('');
+      </div>
+      <button class="pick-btn" data-hero="${h.id}">
+        ${state.heroId===h.id?'ВЫБРАН':'ВЫБРАТЬ'}
+      </button>
+    </article>
+  `).join('');
 
-    $('heroGrid').querySelectorAll('[data-hero]').forEach(
-      b => b.onclick = () => selectHero(b.dataset.hero)
-    );
-  }
+  $('heroGrid').querySelectorAll('[data-hero]').forEach(
+    b => b.onclick = () => selectHero(b.dataset.hero)
+  );
+}
+
+   
 
   function selectHero(id){
     const h=heroes.find(x=>x.id===id);state={...defaults,heroId:id,heroHp:h.hp,mana:h.mana};save();updateStatus();renderHeroes();showView('arena');toast(`${h.name} готов к бою!`);
