@@ -25,14 +25,51 @@
   const defensePower = () => hero() ? hero().def + state.armor : 0;
   function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200)}
   function showView(view){document.querySelectorAll('.view').forEach(el=>el.classList.add('hidden'));$('view-'+view).classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===view));if(view==='arena')renderEnemies();if(view==='shop')renderShop();if(view==='profile')renderProfile();if(view==='heroes')renderHeroes();if(view==='battle')renderBattle();window.scrollTo({top:0,behavior:'smooth'})}
-  function updateStatus(){
-    const h=hero();$('gold').textContent=state.gold;$('level').textContent=state.level;$('xp').textContent=`${state.xp}/${state.level*60}`;
-    if(!h){$('heroAvatar').textContent='🗡️';$('heroName').textContent='Выбери героя';$('heroRole').textContent='Твоя легенда начинается здесь';$('hpText').textContent='—';$('manaText').textContent='—';$('hpBar').style.width='0%';$('manaBar').style.width='0%';$('attack').textContent='—';$('defense').textContent='—';return}
-    $('heroAvatar').textContent=h.emoji;$('heroName').textContent=h.name;$('heroRole').textContent=h.role;
-    $('hpText').textContent=`${Math.max(0,state.heroHp)} / ${maxHp()}`;$('manaText').textContent=`${state.mana} / ${maxMana()}`;
-    $('hpBar').style.width=`${Math.max(0,Math.min(100,state.heroHp/maxHp()*100))}%`;$('manaBar').style.width=`${Math.max(0,Math.min(100,state.mana/maxMana()*100))}%`;
-    $('attack').textContent=attackPower();$('defense').textContent=defensePower();
+  
+function updateStatus(){
+  const h = hero();
+  $('gold').textContent = state.gold;
+  $('level').textContent = state.level;
+  $('xp').textContent = `${state.xp}/${state.level*60}`;
+
+  if(!h){
+    $('heroAvatar').textContent = '🗡️';
+    $('heroName').textContent = 'Выбери героя';
+    $('heroRole').textContent = 'Твоя легенда начинается здесь';
+    $('hpText').textContent = '—';
+    $('manaText').textContent = '—';
+    $('hpBar').style.width = '0%';
+    $('manaBar').style.width = '0%';
+    $('attack').textContent = '—';
+    $('defense').textContent = '—';
+    return;
   }
+
+  const portraits = {
+    blade: 'juggernaut.jpg',
+    iron: 'pudge.jpg',
+    mage: 'crystal_maiden.jpg',
+    shade: 'phantom_assassin.jpg'
+  };
+
+  $('heroAvatar').innerHTML = `
+    <img
+      src="portraits/${portraits[h.id]}"
+      alt="${h.name}"
+      onerror="this.style.display='none';this.parentElement.textContent='${h.emoji}'"
+    >
+  `;
+
+  $('heroName').textContent = h.name;
+  $('heroRole').textContent = h.role;
+  $('hpText').textContent = `${Math.max(0,state.heroHp)} / ${maxHp()}`;
+  $('manaText').textContent = `${state.mana} / ${maxMana()}`;
+  $('hpBar').style.width = `${Math.max(0,Math.min(100,state.heroHp/maxHp()*100))}%`;
+  $('manaBar').style.width = `${Math.max(0,Math.min(100,state.mana/maxMana()*100))}%`;
+  $('attack').textContent = attackPower();
+  $('defense').textContent = defensePower();
+}
+
   
   
     
