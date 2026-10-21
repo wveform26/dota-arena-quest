@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111522">
+  <title>Dota Arena Quest</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark">⚔</div>
+      <div class="brand-copy"><strong>DOTA <span>ARENA QUEST</span></strong><small>МИНИ-АРЕНА · RPG</small></div>
+      <div class="gold-pill">🪙 <b id="gold">35</b></div>
+    </header>
+
+    <section class="hero-status panel">
+      <div class="hero-avatar" id="heroAvatar">🗡️</div>
+      <div class="hero-info">
+        <div class="hero-title-row"><h2 id="heroName">Выбери героя</h2><span class="level-pill">УР. <b id="level">1</b></span></div>
+        <p id="heroRole">Твоя легенда начинается здесь</p>
+        <div class="stat-line"><span>ЗДОРОВЬЕ</span><b id="hpText">—</b></div>
+        <div class="meter hp-meter"><i id="hpBar"></i></div>
+        <div class="stat-line"><span>МАНА</span><b id="manaText">—</b></div>
+        <div class="meter mana-meter"><i id="manaBar"></i></div>
+        <div class="mini-stats"><span>⚔ <b id="attack">—</b></span><span>🛡 <b id="defense">—</b></span><span>✨ <b id="xp">0/60</b></span></div>
+      </div>
+    </section>
+
+    <main>
+      <section id="view-heroes" class="view">
+        <div class="section-heading"><div><small>ЭТАП 01</small><h1>Выбери героя</h1></div><span class="heading-icon">✦</span></div>
+        <div id="heroGrid" class="hero-grid"></div>
+      </section>
+
+      <section id="view-arena" class="view hidden">
+        <div class="section-heading"><div><small>ЭТАП 02</small><h1 id="stageTitle">Арена ждёт</h1></div><span class="heading-icon">✦</span></div>
+        <div id="enemyList" class="enemy-list"></div>
+      </section>
+
+      <section id="view-battle" class="view hidden">
+        <div class="section-heading"><div><small>БОЕВОЙ РЕЖИМ</small><h1>Сражение</h1></div><span class="live-pill"><i></i> LIVE</span></div>
+        <div class="battle-scene panel">
+          <div class="scene-glow"></div>
+          <div class="enemy-art" id="enemyArt">🪨</div>
+          <div class="enemy-name" id="enemyName">Каменный голем</div>
+          <div class="enemy-subtitle" id="enemySubtitle">Страж древних руин</div>
+          <div class="enemy-hp-row"><span>ЗДОРОВЬЕ ВРАГА</span><b id="enemyHpText">100 / 100</b></div>
+          <div class="meter enemy-meter"><i id="enemyHpBar"></i></div>
+          <div class="battle-flash" id="battleFlash"></div>
+        </div>
+        <div class="combat-log panel" id="combatLog">Выбери действие, чтобы начать бой.</div>
+        <div class="combat-actions">
+          <button class="action-btn primary" id="attackBtn"><span>⚔️</span><b>АТАКА</b><small>Обычный удар</small></button>
+          <button class="action-btn magic" id="skillBtn"><span>✨</span><b>НАВЫК</b><small id="skillCost">25 маны</small></button>
+          <button class="action-btn" id="potionBtn"><span>🧪</span><b>ЗЕЛЬЕ</b><small id="potionCount">Осталось: 1</small></button>
+        </div>
+        <button class="wide-btn secondary-btn" id="retreatBtn">← Отступить к выбору врага</button>
+      </section>
+
+      <section id="view-shop" class="view hidden">
+        <div class="section-heading"><div><small>СНАРЯЖЕНИЕ</small><h1>Магазин</h1></div><span class="heading-icon">✦</span></div>
+        <div id="shopItems" class="shop-list"></div>
+        <button class="wide-btn secondary-btn" id="backArenaBtn">← Вернуться на арену</button>
+      </section>
+
+      <section id="view-profile" class="view hidden">
+        <div class="section-heading"><div><small>ТВОЯ ЛЕГЕНДА</small><h1>Профиль</h1></div><span class="heading-icon">✦</span></div>
+        <div class="profile-card panel">
+          <div class="profile-avatar" id="profileAvatar">🗡️</div>
+          <h2 id="profileName">Не выбран</h2>
+          <p id="profileRole">Выбери героя, чтобы начать</p>
+          <div class="profile-grid">
+            <div><small>УРОВЕНЬ</small><b id="profileLevel">1</b></div>
+            <div><small>ПОБЕДЫ</small><b id="wins">0</b></div>
+            <div><small>ЗОЛОТО</small><b id="profileGold">35</b></div>
+            <div><small>ЗЕЛЬЯ</small><b id="profilePotions">1</b></div>
+          </div>
+          <button class="wide-btn secondary-btn" id="changeHeroBtn">Сменить героя / сбросить прогресс</button>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button data-view="arena" class="nav-btn active"><span>🏟️</span><small>АРЕНА</small></button>
+      <button data-view="heroes" class="nav-btn"><span>🧙</span><small>ГЕРОЙ</small></button>
+      <button data-view="shop" class="nav-btn"><span>🛍️</span><small>МАГАЗИН</small></button>
+      <button data-view="profile" class="nav-btn"><span>🏆</span><small>ПРОФИЛЬ</small></button>
+    </nav>
+    <div id="toast" class="toast" aria-live="polite"></div>
+    <footer>Фанатская мини-игра · Неофициальный проект</footer>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
