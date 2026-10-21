@@ -1,16 +1,16 @@
 (() => {
   const $ = id => document.getElementById(id);
   const heroes = [
-    {id:'blade',name:'Blade Dancer',role:'Ловкий воин',emoji:'🗡️',hp:125,mana:80,atk:17,def:4,skill:'Вихрь клинков',color:'violet'},
-    {id:'iron',name:'Iron Guardian',role:'Несокрушимый защитник',emoji:'🛡️',hp:165,mana:65,atk:13,def:7,skill:'Удар титана',color:'blue'},
-    {id:'mage',name:'Arc Mage',role:'Повелитель магии',emoji:'🧙',hp:105,mana:135,atk:12,def:3,skill:'Арканный взрыв',color:'purple'},
-    {id:'shade',name:'Shadow Rogue',role:'Тень на поле боя',emoji:'🥷',hp:112,mana:95,atk:20,def:3,skill:'Теневой выпад',color:'red'}
+    {id:'blade',name:'Juggernaut',role:'Мастер клинка',emoji:'⚔️',hp:125,mana:80,atk:17,def:4,skill:'Blade Fury',color:'violet'},
+    {id:'iron',name:'Pudge',role:'Мясник из Квоута',emoji:'🪝',hp:165,mana:65,atk:13,def:7,skill:'Meat Hook',color:'blue'},
+    {id:'mage',name:'Crystal Maiden',role:'Ледяная волшебница',emoji:'❄️',hp:105,mana:135,atk:12,def:3,skill:'Freezing Field',color:'purple'},
+    {id:'shade',name:'Phantom Assassin',role:'Смертоносная убийца',emoji:'🗡️',hp:112,mana:95,atk:20,def:3,skill:'Coup de Grace',color:'red'}
   ];
   const enemies = [
-    {id:'creep',name:'Лесной крип',sub:'Первый вызов арены',emoji:'👺',hp:48,atk:7,armor:1,gold:18,xp:20,min:1},
-    {id:'archer',name:'Тёмный стрелок',sub:'Быстрый и коварный противник',emoji:'🏹',hp:66,atk:10,armor:2,gold:28,xp:30,min:2},
-    {id:'golem',name:'Каменный голем',sub:'Страж древних руин',emoji:'🗿',hp:105,atk:14,armor:4,gold:45,xp:45,min:3},
-    {id:'roshan',name:'Древний титан',sub:'Главное испытание арены',emoji:'🐲',hp:165,atk:18,armor:5,gold:100,xp:80,min:4}
+    {id:'creep',name:'Axe',sub:'Берсерк Красной Туманности',emoji:'🪓',hp:48,atk:7,armor:1,gold:18,xp:20,min:1},
+    {id:'archer',name:'Sniper',sub:'Меткий стрелок Кинфола',emoji:'🎯',hp:66,atk:10,armor:2,gold:28,xp:30,min:2},
+    {id:'golem',name:'Tiny',sub:'Каменный великан',emoji:'🗿',hp:105,atk:14,armor:4,gold:45,xp:45,min:3},
+    {id:'roshan',name:'Roshan',sub:'Главный босс арены',emoji:'🐉',hp:165,atk:18,armor:5,gold:100,xp:80,min:4}
   ];
   const defaults = {heroId:null,heroHp:0,mana:0,gold:35,xp:0,level:1,weapon:0,armor:0,potions:1,wins:0,enemyId:null,enemyHp:0};
   let state = {...defaults, ...(safeLoad() || {})};
