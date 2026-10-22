@@ -1,4 +1,4 @@
-(() => {
+  (() => {
   const $ = id => document.getElementById(id);
   const heroes = [
     {id:'blade',name:'Juggernaut',role:'Мастер клинка',emoji:'⚔️',hp:125,mana:80,atk:17,def:4,skill:'Blade Fury',color:'violet'},
@@ -348,7 +348,7 @@ function buy(id) {
   toast('Покупка успешна!');
 }
 
-  function buy(id){const prices={potion:20,sword:50,armor:45};if(state.gold<prices[id]){toast('Не хватает золота');return}state.gold-=prices[id];if(id==='potion')state.potions++;if(id==='sword')state.weapon+=3;if(id==='armor')state.armor+=2;save();updateStatus();renderShop();toast('Покупка успешна!')}
+  
   function renderProfile(){const h=hero();$('profileAvatar').textContent=h?.emoji||'🗡️';$('profileName').textContent=h?.name||'Не выбран';$('profileRole').textContent=h?.role||'Выбери героя, чтобы начать';$('profileLevel').textContent=state.level;$('wins').textContent=state.wins;$('profileGold').textContent=state.gold;$('profilePotions').textContent=state.potions}
   $('attackBtn').onclick=()=>{if(!enemy())return;takeTurn(Math.max(3,attackPower()-enemy().armor),'Обычная атака')};
   $('skillBtn').onclick=()=>{if(!enemy()||state.mana<25){toast('Недостаточно маны');return}takeTurn(Math.max(4,attackPower()*2-enemy().armor),hero().skill,25)};
