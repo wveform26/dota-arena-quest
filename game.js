@@ -195,11 +195,90 @@ function renderEnemies(){
     if(state.heroHp<=0){state.gold=Math.floor(state.gold/2);state.heroHp=maxHp();state.mana=maxMana();state.enemyId=null;state.enemyHp=0;save();updateStatus();showView('arena');toast('Герой восстановился. Потеряна половина золота.')}
   }
   function usePotion(){if(state.potions<1||state.heroHp>=maxHp())return;const healed=Math.min(30,maxHp()-state.heroHp);state.heroHp+=healed;state.potions--;const e=enemy();const incoming=e?Math.max(1,e.atk-defensePower()):0;state.heroHp=Math.max(0,state.heroHp-incoming);save();updateStatus();renderBattle();$('combatLog').textContent=`Зелье восстановило ${healed} HP. Враг нанёс ${incoming} урона.`;if(state.heroHp<=0){state.gold=Math.floor(state.gold/2);state.heroHp=maxHp();state.mana=maxMana();state.enemyId=null;state.enemyHp=0;save();updateStatus();showView('arena');toast('Герой восстановился. Потеряна половина золота.')}}
-  function renderShop(){
-    const items=[{id:'potion',name:'Зелье лечения',icon:'🧪',desc:'Восстанавливает до 30 HP во время боя.',price:20,owned:`В наличии: ${state.potions}`},{id:'sword',name:'Рунический клинок',icon:'⚔️',desc:'Постоянно повышает силу атаки на 3.',price:50,owned:`Бонус атаки: +${state.weapon}`},{id:'armor',name:'Броня стража',icon:'🛡️',desc:'Уменьшает входящий урон на 2.',price:45,owned:`Бонус защиты: +${state.armor}`}];
-    $('shopItems').innerHTML=items.map(i=>`<article class="shop-card"><div class="shop-icon">${i.icon}</div><div class="shop-content"><h3>${i.name}</h3><p>${i.desc}</p><div class="price">🪙 ${i.price} золота · ${i.owned}</div></div><button class="buy-btn" data-buy="${i.id}">КУПИТЬ</button></article>`).join('');
-    $('shopItems').querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>buy(b.dataset.buy));
+  
+function renderShop() {
+  const items = [
+    {
+      id: 'potion',
+      name: 'Зелье лечения',
+      icon: '🧪',
+      desc: 'Восстанавливает до 30 HP во время боя.',
+      price: 20,
+      owned: `В наличии: ${state.potions}`
+    },
+    {
+      id: 'manaPotion',
+      name: 'Зелье маны',
+      icon: '🔮',
+      desc: 'Восстанавливает до 40 маны во время боя.',
+      price: 20,
+      owned: `В наличии: ${state.manaPotions}`
+    },
+    {
+      id: 'sword',
+      name: 'Рунический клинок',
+      icon: '⚔️',
+      desc: 'Постоянно повышает силу атаки на 3.',
+      price: 50,
+      owned: `Бонус атаки: +${state.weapon}`
+    },
+    {
+      id: 'armor',
+      name: 'Броня стража',
+      icon: '🛡️',
+      desc: 'Уменьшает входящий урон на 2.',
+      price: 45,
+      owned: `Бонус защиты: +${state.armor}`
+    }
+  ];
+
+  $('shopItems').innerHTML = items.map(i => `
+    <article class="shop-card">
+      <div class="shop-icon">${i.icon}</div>
+      <div class="shop-content">
+        <h3>${i.name}</h3>
+        <p>${i.desc}</p>
+        <div class="price">
+          🪙 ${i.price} золота · ${i.owned}
+        </div>
+      </div>
+      <button class="buy-btn" data-buy="${i.id}">
+        КУПИТЬ
+      </button>
+    </article>
+  `).join('');
+
+  $('shopItems').querySelectorAll('[data-buy]').forEach(
+    b => b.onclick = () => buy(b.dataset.buy)
+  );
+}
+
+function buy(id) {
+  const prices = {
+    potion: 20,
+    manaPotion: 20,
+    sword: 50,
+    armor: 45
+  };
+
+  if (state.gold < prices[id]) {
+    toast('Не хватает золота');
+    return;
   }
+
+  state.gold -= prices[id];
+
+  if (id === 'potion') state.potions++;
+  if (id === 'manaPotion') state.manaPotions++;
+  if (id === 'sword') state.weapon += 3;
+  if (id === 'armor') state.armor += 2;
+
+  save();
+  updateStatus();
+  renderShop();
+  toast('Покупка успешна!');
+}
+
   function buy(id){const prices={potion:20,sword:50,armor:45};if(state.gold<prices[id]){toast('Не хватает золота');return}state.gold-=prices[id];if(id==='potion')state.potions++;if(id==='sword')state.weapon+=3;if(id==='armor')state.armor+=2;save();updateStatus();renderShop();toast('Покупка успешна!')}
   function renderProfile(){const h=hero();$('profileAvatar').textContent=h?.emoji||'🗡️';$('profileName').textContent=h?.name||'Не выбран';$('profileRole').textContent=h?.role||'Выбери героя, чтобы начать';$('profileLevel').textContent=state.level;$('wins').textContent=state.wins;$('profileGold').textContent=state.gold;$('profilePotions').textContent=state.potions}
   $('attackBtn').onclick=()=>{if(!enemy())return;takeTurn(Math.max(3,attackPower()-enemy().armor),'Обычная атака')};
