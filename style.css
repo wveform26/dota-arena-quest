@@ -40,3 +40,109 @@
   object-fit: cover;
   border-radius: inherit;
 }
+
+/* ===== DOTA ARENA QUEST: RED & BLACK THEME ===== */
+
+:root {
+  color-scheme: dark;
+  --bg: #09090c;
+  --panel: #121216;
+  --card: #18181e;
+  --red: #d51f35;
+  --red-bright: #ff3048;
+  --text: #f5f5f7;
+  --muted: #a1a1aa;
+  --border: #343039;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background:
+    radial-gradient(ellipse at top, #291017 0%, transparent 48%),
+    var(--bg) !important;
+  color: var(--text);
+}
+
+header, nav, footer,
+.panel, .modal, .shop-card,
+.hero-card, .enemy-card,
+.profile-card, .battle-card,
+.stats-panel, .section-card {
+  background-color: var(--panel);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+button, .pick-btn, .primary-btn,
+.start-btn, .action-btn {
+  background: linear-gradient(135deg, #ed293f, #9e1025);
+  color: #fff;
+  border: 1px solid #ff4355;
+  transition: filter .2s, transform .2s;
+}
+
+button:hover, .pick-btn:hover {
+  filter: brightness(1.18);
+}
+
+button:active, .pick-btn:active {
+  transform: scale(.97);
+}
+
+button:disabled, .pick-btn:disabled {
+  background: #29252b;
+  color: #77727d;
+  border-color: #39343b;
+}
+
+h1, h2, h3, .section-title {
+  color: #fff;
+}
+
+p, .subtitle, .muted {
+  color: var(--muted);
+}
+
+.stats-chips span,
+.stat-chip, .badge, .level-badge {
+  background: #26151a;
+  color: #ff8996;
+  border: 1px solid #54202a;
+}
+
+.reward, .gold, .accent {
+  color: #ff5367;
+}
+
+input, select, textarea {
+  background: #15151a;
+  color: #fff;
+  border: 1px solid #49404a;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid #d51f35;
+  border-color: #ff4355;
+}
+
+hr, .divider {
+  border-color: #343039;
+}
+
+.locked {
+  filter: saturate(.55);
+}
+
+.hero-avatar, .character-art,
+.enemy-art-small {
+  border-color: #70202e;
+  box-shadow: 0 0 16px #d51f3525;
+}
+
+::selection {
+  background: #d51f35;
+  color: #fff;
+}
