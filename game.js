@@ -12,7 +12,21 @@
     {id:'golem',name:'Tiny',sub:'Каменный великан',emoji:'🗿',hp:105,atk:14,armor:4,gold:45,xp:45,min:3},
     {id:'roshan',name:'Roshan',sub:'Главный босс арены',emoji:'🐉',hp:165,atk:18,armor:5,gold:100,xp:80,min:4}
   ];
-  const defaults = {heroId:null,heroHp:0,mana:0,gold:35,xp:0,level:1,weapon:0,armor:0,potions:1,wins:0,enemyId:null,enemyHp:0};
+  const defaults = {
+  heroId: null,
+  heroHp: 0,
+  mana: 0,
+  gold: 35,
+  xp: 0,
+  level: 1,
+  weapon: 0,
+  armor: 0,
+  potions: 1,
+  manaPotions: 0,
+  wins: 0,
+  enemyId: null,
+  enemyHp: 0
+};
   let state = {...defaults, ...(safeLoad() || {})};
   let toastTimer;
   function safeLoad(){try{return JSON.parse(localStorage.getItem('daquest-save')||'null')}catch{return null}}
