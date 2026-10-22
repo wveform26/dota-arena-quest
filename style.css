@@ -146,3 +146,84 @@ hr, .divider {
   background: #d51f35;
   color: #fff;
 }
+
+/* ===== MATTE RED & BLACK: NO NEON ===== */
+
+html,
+body {
+  background: #0b0b0d !important;
+  color: #f2f2f2;
+}
+
+/* Убираем освещение и градиенты фона */
+body {
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Убираем свечение карточек и портретов */
+.hero-avatar,
+.character-art,
+.enemy-art-small,
+.hero-card,
+.enemy-card,
+.profile-card,
+.battle-card,
+.panel,
+.section-card {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Спокойные тёмные панели */
+header,
+nav,
+footer,
+.panel,
+.modal,
+.shop-card,
+.hero-card,
+.enemy-card,
+.profile-card,
+.battle-card,
+.stats-panel,
+.section-card {
+  background: #151518;
+  border-color: #302a2c;
+}
+
+/* Красные кнопки без свечения */
+button,
+.pick-btn,
+.primary-btn,
+.start-btn,
+.action-btn {
+  background: #a7192d;
+  border: 1px solid #7d1726;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Убираем неоновые эффекты при наведении */
+button:hover,
+.pick-btn:hover {
+  filter: none;
+  box-shadow: none !important;
+}
+
+/* Портреты без красной подсветки */
+.hero-avatar,
+.character-art,
+.enemy-art-small {
+  box-shadow: none !important;
+  border-color: #403034;
+}
+
+/* Обычный чёрный фон внутри полей */
+input,
+select,
+textarea {
+  background: #111113;
+  border-color: #393336;
+  color: #f2f2f2;
+}
