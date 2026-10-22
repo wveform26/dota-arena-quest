@@ -178,13 +178,42 @@ function renderEnemies(){
 }
 
   function startBattle(id){if(!hero()){showView('heroes');toast('Сначала выбери героя');return}const e=enemies.find(x=>x.id===id);if(state.level<e.min)return;state.enemyId=id;state.enemyHp=e.hp;save();$('combatLog').textContent=`${e.name} выходит на арену! Твой ход.`;showView('battle')}
-  function renderBattle(){
-    const e=enemy();if(!e){showView('arena');return}
-    $('enemyArt').textContent=e.emoji;$('enemyName').textContent=e.name;$('enemySubtitle').textContent=e.sub;
-    $('enemyHpText').textContent=`${Math.max(0,state.enemyHp)} / ${e.hp}`;$('enemyHpBar').style.width=`${Math.max(0,Math.min(100,state.enemyHp/e.hp*100))}%`;
-    $('skillCost').textContent=`25 маны · ${hero()?.skill||'Навык'}`;$('potionCount').textContent=`Осталось: ${state.potions}`;
-    $('skillBtn').disabled=state.mana<25;$('potionBtn').disabled=state.potions<1||state.heroHp>=maxHp();
+  
+function renderBattle() {
+  const e = enemy();
+
+  if (!e) {
+    showView('arena');
+    return;
   }
+
+  $('enemyArt').textContent = e.emoji;
+  $('enemyName').textContent = e.name;
+  $('enemySubtitle').textContent = e.sub;
+
+  $('enemyHpText').textContent =
+    `${Math.max(0, state.enemyHp)} / ${e.hp}`;
+
+  $('enemyHpBar').style.width =
+    `${Math.max(0, Math.min(100, state.enemyHp / e.hp * 100))}%`;
+
+  $('skillCost').textContent =
+    `25 маны · ${hero()?.skill || 'Навык'}`;
+
+  $('potionCount').textContent =
+    `Осталось: ${state.potions}`;
+
+  $('manaPotionCount').textContent =
+    `Осталось: ${state.manaPotions}`;
+
+  $('skillBtn').disabled = state.mana < 25;
+  $('potionBtn').disabled =
+    state.potions < 1 || state.heroHp >= maxHp();
+
+  $('manaPotionBtn').disabled =
+    state.manaPotions < 1 || state.mana >= maxMana();
+}
+
   function animateEnemy(){const el=$('enemyArt');el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit')}
   function takeTurn(damage,action,cost=0){
     const e=enemy();if(!e)return;
