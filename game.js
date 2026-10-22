@@ -353,6 +353,7 @@ function buy(id) {
   $('attackBtn').onclick=()=>{if(!enemy())return;takeTurn(Math.max(3,attackPower()-enemy().armor),'Обычная атака')};
   $('skillBtn').onclick=()=>{if(!enemy()||state.mana<25){toast('Недостаточно маны');return}takeTurn(Math.max(4,attackPower()*2-enemy().armor),hero().skill,25)};
   $('potionBtn').onclick=usePotion;
+  $('manaPotionBtn').onclick = useManaPotion;
   $('retreatBtn').onclick=()=>{state.enemyId=null;state.enemyHp=0;save();showView('arena')};
   $('backArenaBtn').onclick=()=>showView('arena');
   $('changeHeroBtn').onclick=()=>{if(confirm('Сбросить весь прогресс и выбрать героя заново?')){state={...defaults};save();updateStatus();showView('heroes')}};
