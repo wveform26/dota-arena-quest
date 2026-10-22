@@ -116,11 +116,53 @@ function renderHeroes(){
   function selectHero(id){
     const h=heroes.find(x=>x.id===id);state={...defaults,heroId:id,heroHp:h.hp,mana:h.mana};save();updateStatus();renderHeroes();showView('arena');toast(`${h.name} готов к бою!`);
   }
-  function renderEnemies(){
-    $('stageTitle').textContent=state.wins?`Арена · Побед ${state.wins}`:'Выбери противника';
-    $('enemyList').innerHTML=enemies.map(e=>{const locked=state.level<e.min;return `<article class="enemy-card ${locked?'locked':''}"><div class="enemy-art-small">${e.emoji}</div><div class="enemy-content"><h3>${e.name} ${locked?'🔒':''}</h3><p>${e.sub}</p><div class="stats-chips"><span>❤️ ${e.hp}</span><span>⚔ ${e.atk}</span><span>🛡 ${e.armor}</span></div><p class="reward">🪙 +${e.gold} · ✨ +${e.xp} опыта</p></div><button class="pick-btn" data-enemy="${e.id}" ${locked?'disabled':''}>${locked?'УР. '+e.min:'В БОЙ'}</button></article>`}).join('');
-    $('enemyList').querySelectorAll('[data-enemy]').forEach(b=>b.onclick=()=>startBattle(b.dataset.enemy));
-  }
+  
+function renderEnemies(){
+  const portraits = {
+    creep: 'axe.jpg',
+    archer: 'sniper.jpg',
+    golem: 'tiny.jpg',
+    roshan: 'roshan.jpg'
+  };
+
+  $('stageTitle').textContent = state.wins
+    ? `Арена · Побед ${state.wins}`
+    : 'Выбери противника';
+
+  $('enemyList').innerHTML = enemies.map(e => {
+    const locked = state.level < e.min;
+
+    return `
+      <article class="enemy-card ${locked ? 'locked' : ''}">
+        <div class="enemy-art-small">
+          <img
+            src="portraits/${portraits[e.id]}"
+            alt="${e.name}"
+            onerror="this.style.display='none';this.parentElement.textContent='${e.emoji}'"
+          >
+        </div>
+        <div class="enemy-content">
+          <h3>${e.name} ${locked ? '🔒' : ''}</h3>
+          <p>${e.sub}</p>
+          <div class="stats-chips">
+            <span>❤️ ${e.hp}</span>
+            <span>⚔ ${e.atk}</span>
+            <span>🛡 ${e.armor}</span>
+          </div>
+          <p class="reward">🪙 +${e.gold} · ✨ +${e.xp} опыта</p>
+        </div>
+        <button class="pick-btn" data-enemy="${e.id}" ${locked ? 'disabled' : ''}>
+          ${locked ? 'УР. ' + e.min : 'В БОЙ'}
+        </button>
+      </article>
+    `;
+  }).join('');
+
+  $('enemyList').querySelectorAll('[data-enemy]').forEach(
+    b => b.onclick = () => startBattle(b.dataset.enemy)
+  );
+}
+
   function startBattle(id){if(!hero()){showView('heroes');toast('Сначала выбери героя');return}const e=enemies.find(x=>x.id===id);if(state.level<e.min)return;state.enemyId=id;state.enemyHp=e.hp;save();$('combatLog').textContent=`${e.name} выходит на арену! Твой ход.`;showView('battle')}
   function renderBattle(){
     const e=enemy();if(!e){showView('arena');return}
