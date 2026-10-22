@@ -224,7 +224,7 @@ function renderBattle() {
     if(state.heroHp<=0){state.gold=Math.floor(state.gold/2);state.heroHp=maxHp();state.mana=maxMana();state.enemyId=null;state.enemyHp=0;save();updateStatus();showView('arena');toast('Герой восстановился. Потеряна половина золота.')}
   }
   function usePotion(){if(state.potions<1||state.heroHp>=maxHp())return;const healed=Math.min(30,maxHp()-state.heroHp);state.heroHp+=healed;state.potions--;const e=enemy();const incoming=e?Math.max(1,e.atk-defensePower()):0;state.heroHp=Math.max(0,state.heroHp-incoming);save();updateStatus();renderBattle();$('combatLog').textContent=`Зелье восстановило ${healed} HP. Враг нанёс ${incoming} урона.`;if(state.heroHp<=0){state.gold=Math.floor(state.gold/2);state.heroHp=maxHp();state.mana=maxMana();state.enemyId=null;state.enemyHp=0;save();updateStatus();showView('arena');toast('Герой восстановился. Потеряна половина золота.')}}
-  
+ 
 function useManaPotion() {
   if (state.manaPotions < 1 || state.mana >= maxMana()) {
     return;
@@ -263,6 +263,7 @@ function useManaPotion() {
     toast('Герой восстановился. Потеряна половина золота.');
   }
 }
+
 
 function renderShop() {
   const items = [
